@@ -4,6 +4,33 @@ DEBUG = True
 #TEMPLATE_DEBUG = DEBUG
 TEMPLATE_DEBUG = True
 
+
+
+
+import os,sys
+#import ROOT_URL
+
+if sys.platform=='win32':
+    #HOMEDIR=r'c:\dataflow_new'
+    HOMEDIR=os.path.dirname(__file__)
+    REPO_ROOT = os.path.split(HOMEDIR)[-1] 
+else:
+    HOMEDIR = os.path.abspath(os.path.dirname(__file__))
+    REPO_ROOT = os.path.basename(HOMEDIR)
+
+ROOT_URLCONF = REPO_ROOT + '.urls'
+
+DEBUG = True
+#TEMPLATE_DEBUG = DEBUG
+TEMPLATE_DEBUG = True
+template_dir = os.path.join(HOMEDIR, r'site-templates')
+static_dir = os.path.join(HOMEDIR, r'static')
+#print 'template', template_dir
+
+
+
+
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -64,7 +91,7 @@ STATIC_ROOT = ''
 STATIC_URL = '/static/'
 
 # Additional locations of static files
-STATICFILES_DIRS = (
+STATICFILES_DIRS = (static_dir,
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -103,7 +130,7 @@ ROOT_URLCONF = 'psdplan.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'psdplan.wsgi.application'
 
-TEMPLATE_DIRS = (
+TEMPLATE_DIRS = (template_dir,
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -121,6 +148,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'crispy_forms',
+    'psdplan.apps.viewpsd',
 )
 
 # A sample logging configuration. The only tangible logging
