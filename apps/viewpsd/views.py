@@ -37,3 +37,6 @@ from django.conf import settings
 
 def home(request):
     return render(request,'plot_test.html')
+
+def psd(request):
+    return render(request,'psd.html')

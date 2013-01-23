@@ -21,5 +21,6 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns(REPO_ROOT + '.apps.viewpsd.views',
-                                 ('^$', 'home'),                                 
-                                 )
+                        ('^psd$', 'psd'),  
+                        ('^$', 'home'),                                 
+                        )
