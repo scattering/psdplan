@@ -18,5 +18,7 @@ OOSuite
 *.blg
 *.log
 *.tex~
+*.name
+*.xml
 .name
 .xml
