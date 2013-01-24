@@ -80,15 +80,17 @@ Ext.onReady(function () {
         xtype       : 'fieldset',
         border      : false,
         defaultType : 'textfield',
-        layout: { type: 'hbox',
-            pack: 'start'
+        layout: { type: 'column',
+                  pack: 'start',
+                  align: 'stretch'
         },
         defaults    : {allowBlank : false,
             decimalPrecision: 10,
-            labelPad:'2',
+            labelPad:'-2',
             labelWidth:'10',
-            labelAlign:'left',
-            anchor: '100%',
+            labelAlign:'top',
+            columnWidth: 0.3,
+            //anchor: '100%',
             hideTrigger: true,
             style: {'margin': '0px 5px 5px 0px',
                 'border':0,
@@ -113,20 +115,22 @@ Ext.onReady(function () {
         border      : false,
         itemId      : 'a4FieldSet',
         defaultType : 'textfield',
-        layout: { type: 'hbox',
-            pack: 'start'
+        layout: { type: 'column',
+                  pack: 'start',
+                  align: 'stretch'
         },
         defaults    : {allowBlank : false,
             decimalPrecision: 10,
-            labelPad:'2',
-            labelWidth:'2',
-            labelAlign:'left',
-            anchor: '100%',
+            labelPad:'-2',
+            labelWidth:'10',
+            labelAlign:'top',
+            columnWidth: 0.3,
+            //anchor: '100%',
             hideTrigger: true,
-            style: {'margin': '0px 5px 5px 0px',
-                'border':0,
-                'paddingRight':15
-            },
+            //style: {'margin': '0px 5px 5px 0px',
+            //    'border':0,
+            //    'paddingRight':15
+            //},
             flex:1
         },
         items: [{fieldLabel: 'a4start',
@@ -164,34 +168,88 @@ Ext.onReady(function () {
 //    }
 
 
-    psdPlanner.RangePanel = Ext.create('Ext.form.Panel', {
-        title: 'scanRange',
+    psdPlanner.a3RangePanel = Ext.create('Ext.form.Panel', {
+        title: 'A3 range',
         labelWidth: 75, // label settings here cascade unless overridden
         url: 'save-form.php',
         frame: true,
-        bodyStyle: 'padding:5px 5px 0',
-        width: 500,
+        //bodyStyle: 'padding:5px 5px 0',
+        width: 400,
+        height: 100,
         //renderTo: Ext.getBody(),
-        layout: 'anchor', // arrange fieldsets side by side
+        layout:  { type: 'fit',
+                   //align: 'center'
+        },
         //layoutConfig: {
-        //    rows:2
+        //    columns:1
         //},
         defaults: {
             bodyPadding: 4
         },
-        items:[psdPlanner.a3FieldSet, psdPlanner.a4FieldSet]
+        items:[psdPlanner.a3FieldSet]//, psdPlanner.a4FieldSet]
     });
 
-
-
-    psdPlanner.TopPanel = new Ext.Panel({
-        layout: 'table',
-        width: 1100,
-        layoutConfig: {
-            columns: 2
+    psdPlanner.a4RangePanel = Ext.create('Ext.form.Panel', {
+        title: 'A4 range',
+        labelWidth: 75, // label settings here cascade unless overridden
+        url: 'save-form.php',
+        frame: true,
+        //bodyStyle: 'padding:5px 5px 0',
+        width: 400,
+        height: 100,
+        //renderTo: Ext.getBody(),
+        layout:  { type: 'fit',
+            //align: 'center'
         },
-        items: [psdPlanner.RangePanel]
+        //layoutConfig: {
+        //    columns:1
+        //},
+        defaults: {
+            bodyPadding: 4
+        },
+        items:[psdPlanner.a4FieldSet]//, psdPlanner.a4FieldSet]
     });
+
+
+
+    psdPlanner.TopPanel = Ext.create('Ext.form.Panel', {
+        title: 'scanRanges',
+        labelWidth: 75, // label settings here cascade unless overridden
+        url: 'save-form.php',
+        frame: true,
+        //bodyStyle: 'padding:5px 5px 0',
+        width: 500,
+        height: 600,
+        autoscroll: true,
+        //renderTo: Ext.getBody(),
+        layout:  { type: 'vbox',
+            //align: 'center'
+        },
+        //layoutConfig: {
+        //    columns:1
+        //},
+        defaults: {
+            bodyPadding: 4
+        },
+//        items: [psdPlanner.a3RangePanel,
+//        {
+//            xtype: 'panel',
+//            title: 'Inner Panel Two',
+//            width: 250,
+//            flex: 4
+//        }]
+        items:[psdPlanner.a3RangePanel, psdPlanner.a4RangePanel]//, psdPlanner.a4FieldSet]
+    });
+
+
+   // psdPlanner.TopPanel = new Ext.Panel({
+   //     layout: 'table',
+   //     width: 1100,
+   //     layoutConfig: {
+   //         columns: 2
+   //     },
+   //    items: [psdPlanner.RangePanel]
+   //});
 
     var button =  new Ext.Button({applyTo:'button-div',text:'CALCULATE!', minWidth: 130, handler: calculateHandler});
     var conn = new Ext.data.Connection();
@@ -334,7 +392,7 @@ Ext.onReady(function () {
         tabWidth: 800,
         enableTabScroll: true,
         width: 1200,
-        height: 765,
+        height: 800,
         activeItem: 'psdPlannerTab', //Making the calculator tab selected first
         defaults: {autoScroll:true},
         items: [
@@ -342,7 +400,7 @@ Ext.onReady(function () {
                 title: 'PSD Planner',
                 id: 'psdPlannerTab',
                 iconCls: '/static/img/silk/calculator.png',
-                items: [psdPlanner.RangePanel]
+                items: [psdPlanner.TopPanel]
             }, {
                 title: 'Help Manual',
                 id: 'helpmanualtab',
