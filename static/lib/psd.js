@@ -361,30 +361,44 @@ Ext.onReady(function () {
 
 
 
-    var TotalPanel = {
-        xtype       : 'fieldset',
-        border      : false,
-        defaultType : 'textfield',
-        layout: { type: 'vbox',
-            pack: 'start'
+    psdPlanner.plotPanel = Ext.create('Ext.form.Panel', {
+        title: 'PSD Panel',
+        labelWidth: 75, // label settings here cascade unless overridden
+        url: 'save-form.php',
+        frame: true,
+        //bodyStyle: 'padding:5px 5px 0',
+        width: 500,
+        height: 600,
+        //renderTo: Ext.getBody(),
+        layout:  { type: 'fit',
+            //align: 'center'
         },
-        //defaultMargin : {top: 0, right: 5, bottom: 0, left: 5},
-        //padding: '0 5 0 5',
-        defaults    : {allowBlank : false,
-            decimalPrecision: 10,
-            labelPad:'2',
-            labelWidth:'2',
-            labelAlign:'left',
-            anchor: '100%',
-            hideTrigger: true,
-            style: {'margin': '0px 5px 5px 0px',
-                'border':0,
-                'paddingRight':15
-            },
-            flex:1
+        //layoutConfig: {
+        //    columns:1
+        //},
+        defaults: {
+            bodyPadding: 4
         },
-        items: [tb,psdPlanner.TopPanel]
-    };
+        afterComponentLayout: function(width, height)
+        {
+            var data = [['1/2012', 50],['2/2012', 66],['3/2012', 75]];
+            $('#'+this.body.id).empty();
+            $.jqplot(this.body.id, data,
+                { title:'Server Load',
+                    axes:{xaxis:{renderer:$.jqplot.DateAxisRenderer}},
+                    series:[
+                        {label:'Awesome Level'}
+                    ]
+                });
+
+            this.callParent(arguments);
+        }
+    });
+
+
+
+
+
 
     var myTabs = new Ext.TabPanel({
         resizeTabs: true, // turn on tab resizing
@@ -400,8 +414,10 @@ Ext.onReady(function () {
                 title: 'PSD Planner',
                 id: 'psdPlannerTab',
                 iconCls: '/static/img/silk/calculator.png',
-                items: [psdPlanner.TopPanel]
-            }, {
+                layout: 'hbox',
+                items: [psdPlanner.TopPanel, psdPlanner.plotPanel]
+            },
+            {
                 title: 'Help Manual',
                 id: 'helpmanualtab',
                 padding: 5,
