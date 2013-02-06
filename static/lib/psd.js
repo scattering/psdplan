@@ -383,14 +383,57 @@ Ext.onReady(function () {
         {
             var data = [['1/2012', 50],['2/2012', 66],['3/2012', 75]];
             $('#'+this.body.id).empty();
-            $.jqplot(this.body.id, data,
-                { title:'Server Load',
-                    axes:{xaxis:{renderer:$.jqplot.DateAxisRenderer}},
-                    series:[
-                        {label:'Awesome Level'}
-                    ]
-                });
+//            $.jqplot(this.body.id, data,
+//                { title:'Server Load',
+//                    axes:{xaxis:{renderer:$.jqplot.DateAxisRenderer}},
+//                    series:[
+//                        {label:'Awesome Level'}
+//                    ]
+//                });
 
+            var sinPoints = [];
+            for (var i=0; i<2*Math.PI; i+=0.4){
+                sinPoints.push([i, 2*Math.sin(i-.8)]);
+            }
+            psdPlanner.plot = $.jqplot (this.body.id, [sinPoints], {
+                title: 'Scan space',
+                series: [ {shadow: false,
+                           color: 'red',
+                           markerOptions: {shadow: false, size: 4},
+                           showLine:false
+                           }],
+                grid: {shadow: false},
+                sortData: false,
+                axes:{
+                    xaxis:{
+                        label: 'Qx (inverse Å)',
+                        labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+                        tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                        tickOptions: {
+                            formatString: "%.2g"
+                        }
+                    },
+                    yaxis:{
+                        label: 'Qy (inverse Å)',
+                        labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+                        tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                        tickOptions: {
+                            formatString: "%.2g",
+                            // fix for ticks drifting to the left in accordionview!
+                            _styles: {right: 0}
+                        }
+                    }
+                },
+                cursor: {show:true, zoom:false},
+//                interactors: [{type: 'master', scrollZoom: true, dragPan: true},
+//                    {type: 'VerticalLine',
+//                        name: 'vcursor',
+//                        x0: 0.0001,
+//                        color1: 'green',
+//                        color2: 'green'
+//                    }]
+            });
+            //psdPlanner.plot.series[0].data = [];
             this.callParent(arguments);
         }
     });
