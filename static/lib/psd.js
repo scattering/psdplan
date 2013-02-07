@@ -79,7 +79,7 @@ Ext.onReady(function () {
         itemId      : 'a3FieldSet',
         xtype       : 'fieldset',
         border      : false,
-        defaultType : 'textfield',
+        defaultType : 'numberfield',
         layout: { type: 'column',
                   pack: 'start',
                   align: 'stretch'
@@ -114,7 +114,7 @@ Ext.onReady(function () {
         xtype       : 'fieldset',
         border      : false,
         itemId      : 'a4FieldSet',
-        defaultType : 'textfield',
+        defaultType : 'numberfield',
         layout: { type: 'column',
                   pack: 'start',
                   align: 'stretch'
