@@ -30,7 +30,8 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import User 
 from django.contrib.auth import authenticate, login
 
-
+import json
+import simplejson
 
 from django.conf import settings
 #FILES_DIR=settings.FILES_DIR
@@ -40,3 +41,9 @@ def home(request):
 
 def psd(request):
     return render(request,'psd.html')
+
+@csrf_exempt
+def calculate(request):
+    data = simplejson.loads(request.POST['data'])
+    result={'success':'ok', 'x':[1,2],'y':[3,4]}
+    return HttpResponse(simplejson.dumps(result))

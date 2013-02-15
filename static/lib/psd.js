@@ -215,7 +215,7 @@ Ext.onReady(function () {
     psdPlanner.TopPanel = Ext.create('Ext.form.Panel', {
         title: 'scanRanges',
         labelWidth: 75, // label settings here cascade unless overridden
-        url: 'save-form.php',
+        url: '/calculate/',
         frame: true,
         //bodyStyle: 'padding:5px 5px 0',
         width: 500,
@@ -238,7 +238,25 @@ Ext.onReady(function () {
 //            width: 250,
 //            flex: 4
 //        }]
-        items:[psdPlanner.a3RangePanel, psdPlanner.a4RangePanel]//, psdPlanner.a4FieldSet]
+        items:[psdPlanner.a3RangePanel, psdPlanner.a4RangePanel],
+        buttons: [{
+            text: 'Submit',
+            handler: function() {
+                var form = this.up('form').getForm();
+                if (form.isValid()) {
+                    form.submit({
+                        success: function(form, action) {
+                            Ext.Msg.alert('Success', action.result.message);
+                        },
+                        failure: function(form, action) {
+                            Ext.Msg.alert('Failed', action.result ? action.result.message : 'No response');
+                        }
+                    });
+                } else {
+                    Ext.Msg.alert( "Error!", "Your form is invalid!" );
+                }
+            }
+        }]//, psdPlanner.a4FieldSet]
     });
 
 
