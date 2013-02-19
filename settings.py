@@ -149,6 +149,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'crispy_forms',
     'psdplan.apps.viewpsd',
+    'psdplan.apps.activation_analysis',
 )
 
 # A sample logging configuration. The only tangible logging

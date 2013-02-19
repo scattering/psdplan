@@ -97,7 +97,6 @@ def psdcali(al2o3file,calipath = 'psdcali/',a4c = None, vfile = None,veff = zero
         savetxt(califd,vstack((intt,a4dd,efl)).T,fmt = '%g')
     califd.close()
     if pl: show()
-    return
 
 def psdcalidave(al2o3file,a4c = None, vfile = None,veff = zeros(48),pl = None, Ef = 14.7,
             califile = 'PSD_cali.dat',psdcol = ['Psdc%02d' %n for n in range(48)]):

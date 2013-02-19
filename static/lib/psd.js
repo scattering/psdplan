@@ -18,8 +18,23 @@ Ext.require([
     'Ext.ux.RowExpander',
     'Ext.selection.CellModel',
     'Ext.button.*',
-    'Ext.filefield.*'
-]);
+    'Ext.filefield.*',
+    "Ext.util.Cookies",
+    "Ext.decode",
+    "Ext.Ajax"
+], function(){
+        // Add csrf token to every ajax request
+        var token = Ext.util.Cookies.get('csrftoken');
+        if(!token){
+            Ext.Error.raise("Missing csrftoken cookie");
+        } else {
+            Ext.Ajax.defaultHeaders = Ext.apply(Ext.Ajax.defaultHeaders || {}, {
+                'X-CSRFToken': token
+            });
+        }
+    }
+);
+
 
 Ext.onReady(function () {
     /* 
@@ -246,7 +261,10 @@ Ext.onReady(function () {
                 if (form.isValid()) {
                     form.submit({
                         success: function(form, action) {
-                            Ext.Msg.alert('Success', action.result.message);
+                            var result=Ext.decode(action.response.responseText)
+                            psdPlanner.plot.series[0].data=result.series
+                            psdPlanner.plot.replot({resetAxes : true});
+                           // Ext.Msg.alert('Success', action.result.message);
                         },
                         failure: function(form, action) {
                             Ext.Msg.alert('Failed', action.result ? action.result.message : 'No response');
