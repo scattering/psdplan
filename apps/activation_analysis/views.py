@@ -31,6 +31,8 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.conf import settings
 from django.template import RequestContext, loader
+import periodictable
+from periodictable import activation
 
 class ActivationForm(forms.Form):
     #like_website = forms.TypedChoiceField(
@@ -88,7 +90,7 @@ class ActivationForm(forms.Form):
 
 
 #@login_required()
-def activation(request):
+def activation_view(request):
     
     #redirect_url = request.GET.get('next')
 
@@ -103,6 +105,13 @@ def activation(request):
         if activation_form.is_valid():
             cleaned_data=activation_form.cleaned_data
             print 'valid'
+            
+            activation.load_table()
+            env = activation.ActivationEnvironment(fluence=float(cleaned_data['flux']),Cd_ratio=70,
+                                                           fast_ratio=50,location="BT-2")
+            sample = activation.Sample(cleaned_data['chemical_formula'], float(cleaned_data['mass']))
+            sample.calculate_activation(env, exposure=float(cleaned_data['time_on']), rest_times=[0,1,24,360])
+            sample.show_table()            
             return HttpResponseRedirect("/results/")
     else:
         activation_form=ActivationForm()

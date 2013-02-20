@@ -22,7 +22,7 @@ urlpatterns = patterns('',
 
 
 urlpatterns += patterns(REPO_ROOT + '.apps.activation_analysis.views',
-                        ('^activation/$', 'activation'),
+                        ('^activation/$', 'activation_view'),
                         #('^$', 'home'),     
                         )
 
