@@ -20,8 +20,15 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
 
+
+urlpatterns += patterns(REPO_ROOT + '.apps.activation_analysis.views',
+                        ('^activation/$', 'activation'),
+                        #('^$', 'home'),     
+                        )
+
 urlpatterns += patterns(REPO_ROOT + '.apps.viewpsd.views',
                         ('^psd$', 'psd'), 
                         ('^calculate/$', 'calculate'), 
-                        ('^$', 'home'),                                 
+                        ('^$', 'home'),                                                      
                         )
+
