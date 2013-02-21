@@ -79,7 +79,7 @@ class ActivationForm(forms.Form):
     
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
-        self.helper.form_id = 'id-exampleForm'
+        self.helper.form_id = 'id-activationForm'
         self.helper.form_class = 'blueForms'
         self.helper.form_method = 'post'
         #self.helper.form_action = 'submit_calculation'
@@ -106,7 +106,7 @@ def activation_view(request):
             cleaned_data=activation_form.cleaned_data
             print 'valid'
             
-            activation.load_table()
+            #activation.load_table()
             env = activation.ActivationEnvironment(fluence=float(cleaned_data['flux']),Cd_ratio=70,
                                                            fast_ratio=50,location="BT-2")
             sample = activation.Sample(cleaned_data['chemical_formula'], float(cleaned_data['mass']))
