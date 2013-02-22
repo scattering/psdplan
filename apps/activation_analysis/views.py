@@ -111,8 +111,10 @@ def activation_view(request):
                                                            fast_ratio=50,location="BT-2")
             sample = activation.Sample(cleaned_data['chemical_formula'], float(cleaned_data['mass']))
             sample.calculate_activation(env, exposure=float(cleaned_data['time_on']), rest_times=[0,1,24,360])
-            sample.show_table()            
-            return HttpResponseRedirect("/results/")
+            sample.show_table()   
+            result={'success':'ok'}
+            return HttpResponse(simplejson.dumps(result))
+            #return HttpResponseRedirect("/results/")
     else:
         activation_form=ActivationForm()
     return render_to_response("activation.html", {'activation_form': activation_form}, context_instance=RequestContext(request))
