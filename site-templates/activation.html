@@ -13,13 +13,7 @@
     <script type="text/javascript" src="/static/lib/ajaxCSRFfix.js"></script>
 
 
-    <!--<script type="text/javascript" src="http://ncnr.nist.gov/instruments/magik/calculators/jqplot/jquery.jqplot.min.js"></script>-->
-    <!--<script type="text/javascript" src="http://ncnr.nist.gov/instruments/magik/calculators/jqplot/jqplot.canvasTextRenderer.min.js"></script>-->
-    <!--<script type="text/javascript" src="http://ncnr.nist.gov/instruments/magik/calculators/jqplot/jqplot.canvasAxisLabelRenderer.min.js"></script>-->
-    <!--<script type="text/javascript" src="http://ncnr.nist.gov/instruments/magik/calculators/jqplot/jqplot.canvasAxisTickRenderer.min.js"></script>-->
-    <!--<script type="text/javascript" src="/static/lib/plotting/jqplot/jqplot.cursor.js"></script>-->
-    <!--<script language="javascript" type="text/javascript" src="/static/lib/plotting/jqplot/plugins/jqplot.dateAxisRenderer.min.js"></script>-->
-   <!---->
+
 
 
     <script type="text/javascript" src="/static/lib/plotting/jqplot/jquery.jqplot.js"></script>
@@ -65,19 +59,24 @@ console.log(ldata);
             ["O-17", "N-17", "n,p", "4.17 s", 2.7790531348212377e-10, 4.139938733834401e-270, 0.0, 0.0],
             ["O-18", "O-19", "act", "27.1 s", 2.634298973167962e-08, 2.753803230750374e-48, 0.0, 0.0]],
         "exposure": 1.0, "fast": 0.0, "Cd": 0.0};
-
+    var result=$.parseJSON(ldata);
+    result.total.splice(0,0,"total activity","","",""); //for a final column
+    result.activity.push(result.total);
     var data={}
-    data.headers=["element","daughter","reaction","half life","activity (0 hrs)","activity ( 1hr)", "activity (24 hrs)", "activity (15 days"]
+    //construct headers
+    data.headers=["element","daughter","reaction","half life","activity (0 hrs)","activity ( 1hr)", "activity (24 hrs)", "activity (15 days)", result.rest[4]+" (hours)"]
     data.rows=[]
     for (var i=0; i < result.activity.length; i++){
         data.rows.push(result.activity[i]);
     }
+
+    //add headers to table
     var row = '<tr class="header">';
     for (var i in data.headers) {
         row += '<th style=""><a href="#" class="sort"><span>' + data.headers[i] + '</span></a></th>';
     }
     row += '</tr>'
-    $(row).appendTo('table:[id=results_table]');
+    $(row).appendTo('table:[id=results_table]');  //add to the dom
     row = '';
     for (var i in data.rows) {
         row += '<tr id="' + i + '">';
@@ -86,7 +85,9 @@ console.log(ldata);
         }
         row += '</tr>';
     }
-    $(row).appendTo('table:[id=results_table]');
+
+
+    $(row).appendTo('table:[id=results_table]'); //add to the dom
     //$(row).appendTo('table.data');
     }
     });

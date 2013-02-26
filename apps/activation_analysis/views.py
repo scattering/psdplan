@@ -107,12 +107,36 @@ def activation_view(request):
             print 'valid'
             
             #activation.load_table()
-            env = activation.ActivationEnvironment(fluence=float(cleaned_data['flux']),Cd_ratio=70,
-                                                           fast_ratio=50,location="BT-2")
-            sample = activation.Sample(cleaned_data['chemical_formula'], float(cleaned_data['mass']))
-            sample.calculate_activation(env, exposure=float(cleaned_data['time_on']), rest_times=[0,1,24,360])
+            fast_ratio=50
+            Cd_ratio=70
+            fluence=float(cleaned_data['flux'])
+            mass=cleaned_data['mass']
+            chemical_formula=cleaned_data['chemical_formula']
+            exposure=float(cleaned_data['time_on'])
+            rest_times=[0,1,24,360,float(cleaned_data['time_off'])]
+            env = activation.ActivationEnvironment(fluence=fluence,Cd_ratio=Cd_ratio,
+                                                           fast_ratio=fast_ratio,location="BT-2")
+            sample = activation.Sample(chemical_formula, mass)
+            sample.calculate_activation(env, exposure=exposure, rest_times=rest_times)
             sample.show_table()   
-            result={'success':'ok'}
+            total = [0]*len(sample.rest_times)
+            rows = []
+            for el,activity_el in activation._sorted_activity(sample.activity.items()):
+                total = [t+a for t,a in zip(total,activity_el)]
+                rows.append([el.isotope,el.daughter,el.reaction,el.Thalf_str]+activity_el)
+        
+            result = { 
+                'success': True,
+                'sample': chemical_formula,
+                'mass': mass,
+                'flux': fluence,
+                'fast': fast_ratio,
+                'Cd': Cd_ratio,
+                'exposure': exposure,
+                'rest': rest_times,
+                'activity': rows, 
+                'total': total,
+            }
             return HttpResponse(simplejson.dumps(result))
             #return HttpResponseRedirect("/results/")
     else:
