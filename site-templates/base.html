@@ -3,10 +3,6 @@
         <title>{% block title %}{% endblock %}</title>
 	
 	
-	   
-	
-       
-	
 	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/start/jquery-ui.css" type="text/css" rel="Stylesheet" />
 	<link href="../static/css/bootstrap.css" rel="stylesheet">
 	<link href="../static/css/bootstrap.min.css" rel="stylesheet">
@@ -60,6 +56,18 @@
 
         {% block head %}{% endblock %}
     </head>
+    
+<!--<script>-->
+  <!--$(document).ready(function () {-->
+        <!--$('ul.nav > li').click(function(e){-->
+            <!--$('ul.nav > li').removeClass('active');-->
+            <!--$(this).addClass('active');    -->
+	  <!--//e.preventDefault();            -->
+           <!--});-->
+  <!--});-->
+
+<!--</script>-->
+  
 	<body>
 	    <div class ="container">
 	    <div class="masthead">
@@ -79,8 +87,8 @@
 	    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Orientation</a></li>
 	    </ul> <!-- dropdown-menu -->
 	    </li> <!-- dropdown -->
-	    <li><a href="#">PSD Planner</a></li>
-		   <li><a href="#">Contact</a></li>
+	    <li><a href="/psd">PSD Planner</a></li>
+		   <li><a href="/contact">Contact</a></li>
 	    </ul> <!-- nav -->
 	    </div> <!-- navbar-inner -->
 	    </div> <!-- navbar -->

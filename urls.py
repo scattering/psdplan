@@ -27,7 +27,8 @@ urlpatterns += patterns(REPO_ROOT + '.apps.activation_analysis.views',
                         )
 
 urlpatterns += patterns(REPO_ROOT + '.apps.viewpsd.views',
-                        ('^psd$', 'psd'), 
+                        ('^contact$', 'contact'), 
+                        ('^psd$', 'psd'),                         
                         ('^calculate/$', 'calculate'), 
                         ('^$', 'home'),                                                      
                         )

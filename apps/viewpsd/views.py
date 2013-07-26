@@ -44,6 +44,9 @@ def home(request):
 def psd(request):
     return render(request,'psd.html')
 
+def contact(request):
+    return render(request,'contact.html')
+
 #@csrf_exempt
 def calculate(request):
     a3start=float(request.POST['a3start'])
